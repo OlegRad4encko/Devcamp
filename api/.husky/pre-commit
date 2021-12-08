@@ -1,6 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-./node_modules/.bin/eslint src/
+npx eslint src
 
 #nodemon -r dotenv/config src/app.js

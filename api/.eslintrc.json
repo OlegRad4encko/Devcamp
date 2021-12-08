@@ -20,7 +20,6 @@
   },
   "rules": {
     "prettier/prettier": "error",
-    "semi": ["error", "always"],
     "quotes": ["error", "single"],
     "no-unused-vars": ["error", {
       "vars": "all",

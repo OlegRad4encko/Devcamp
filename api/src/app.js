@@ -1,12 +1,13 @@
 const express = require('express');
+
 const app = express();
 
-app.get('/', function (req, res) {
-    res.send('Hello World');
+app.get('/', (req, res) => {
+  res.send('Hello World');
 });
 
-app.post('/users', function (req, res) {
-    res.send('Hello World');
+app.post('/users', (req, res) => {
+  res.send('Hello World');
 }); // проверил, Postman поставил, скриншот приложу к сообщению
 
 console.log(process.env.APP_PORT);

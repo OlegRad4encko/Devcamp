@@ -10,13 +10,13 @@ services:
     volumes:
       - ./tmp/data:/var/lib/postgresql/data
     ports:
-      - ${DB_PORT1}:${DB_PORT2}
+      - ${DB_PORT}:5432
 
   adminer:
     image: adminer
     restart: always
     ports:
-      - ${ADMINER_PORT1}:${ADMINER_PORT2}
+      - ${ADMINER_PORT}:8080
 
   app:
     image: node:${NODE_VERSION}

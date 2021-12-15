@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./tmp/data:/var/lib/postgresql/data
+    ports:
+      - ${DB_PORT1}:${DB_PORT2}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - ${ADMINER_PORT1}:${ADMINER_PORT2}
+
+  app:
+    image: node:${NODE_VERSION}
+    working_dir: /app
+    ports:
+      - ${APP_PORT1}:${APP_PORT2}
+    volumes:
+      - ../api/:/app
+    command: sh -c "npx nodemon -r dotenv/config src/app.js"

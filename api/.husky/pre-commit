@@ -1,6 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-cd api && npx eslint src
-
-#nodemon -r dotenv/config src/app.js

@@ -11,16 +11,14 @@ router.get('/', async (req, res) => {
       res.status(404).json({ message: 'Records not found' });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Error selecting profile', error: err });
+    res.status(500).json({ message: 'Error selecting posts', error: err });
   }
 });
 
 router.get('/:id', async (req, res) => {
+  const idPost = req.params.id;
   try {
-    const count = await db
-      .select()
-      .from('post')
-      .where('id_post', req.params.id);
+    const count = await db.select().from('post').where('id_post', idPost);
 
     if (Object.keys(count).length !== 0) {
       res.status(200).json(count);
@@ -28,7 +26,7 @@ router.get('/:id', async (req, res) => {
       res.status(404).json({ message: 'Records not found' });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Error selecting profile', error: err });
+    res.status(500).json({ message: 'Error selecting post', error: err });
   }
 });
 
@@ -42,7 +40,7 @@ router.post('/', async (req, res) => {
       res.status(404).json({ added: 'false' });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Error adding profile', error: err });
+    res.status(500).json({ message: 'Error adding post', error: err });
   }
   res.send();
 
@@ -50,31 +48,83 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const idProfile = req.params.id;
+  const idPost = req.params.id;
   const changes = req.body;
   try {
-    const count = await db('post').where('id_post', idProfile).update(changes);
+    const count = await db('post').where('id_post', idPost).update(changes);
     if (count) {
       res.status(200).json({ updated: count });
     } else {
       res.status(404).json({ message: 'Record not found' });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Error updating profile', error: err });
+    res.status(500).json({ message: 'Error updating post', error: err });
   }
 });
 
 router.delete('/:id', async (req, res) => {
-  const idProfile = req.params.id;
+  const idPost = req.params.id;
   try {
-    const count = await db('post').where('id_post', idProfile).del();
+    const count = await db('post').where('id_post', idPost).del();
     if (count !== 0) {
       res.status(200).json({ deleted: 'true' });
     } else {
       res.status(404).json({ deleted: 'false' });
     }
   } catch (err) {
-    res.status(500).json({ message: 'Error deleting profile', error: err });
+    res.status(500).json({ message: 'Error deleting post', error: err });
+  }
+});
+
+/*
+
+    Post comments list ------------------------------
+
+ */
+
+router.get('/:id/comments', async (req, res) => {
+  const idPost = req.params.id;
+  console.log(idPost);
+  try {
+    const count = await db
+      .select()
+      .from('comments')
+      .orderBy('time_stamp')
+      .where('id_post', idPost);
+    if (Object.keys(count).length !== 0) {
+      res.status(200).json(count);
+    } else {
+      res.status(404).json({ message: 'Comments not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Error selecting comments', error: err });
+  }
+});
+
+/*
+
+    Post likes list ------------------------------
+
+ */
+
+router.get('/:id/likes-list', async (req, res) => {
+  const idPost = req.params.id;
+  try {
+    const count = await db
+      .select('profile.name', 'profile.surname', 'profile.user_icon')
+      .from('post')
+      .join('post_likes', 'post.id_post', '=', 'post_likes.id_post')
+      .join('profile', 'post.id_profile', '=', 'profile.id_profile')
+      .where('post.id_post', idPost);
+    console.log(count);
+    if (Object.keys(count).length !== 0) {
+      res.status(200).json(count);
+    } else {
+      res.status(404).json({ message: 'Records not found' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Error selecting profile', error: err });
   }
 });
 

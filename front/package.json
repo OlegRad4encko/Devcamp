@@ -25,7 +25,7 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "src/*": ""
+    "src/*": "eslint"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^8.5.0",
     "lint-staged": "^12.1.4",
     "prettier": "^2.5.1"
   }

@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import { PostImage } from "./containers/news/postImage";
 import { NewsContainer } from "./containers/news/newsContainer";

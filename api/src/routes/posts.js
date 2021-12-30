@@ -120,11 +120,11 @@ router.get('/:id/likes-list', async (req, res) => {
     if (Object.keys(count).length !== 0) {
       res.status(200).json(count);
     } else {
-      res.status(404).json({ message: 'Records not found' });
+      res.status(404).json({ message: 'likes not found' });
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: 'Error selecting profile', error: err });
+    res.status(500).json({ message: 'Error selecting likes', error: err });
   }
 });
 

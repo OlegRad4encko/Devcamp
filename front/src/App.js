@@ -9,7 +9,7 @@ const post = {
   imageAlt: undefined,
   postTitle: "My title",
   postText:
-    "lorem ipsum dolor sit amet, consectetur adipisicing elit,\n" +
+    "lorem ipsum dolor sit amet, consectetur adipisicing elkit,\n" +
     "            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" +
     "            ut enim ad minim veniam, quis nostrud exercitation ullamco\n" +
     "            laboris nisi ut aliquip ex ea commodo consequat. duis aute\n" +

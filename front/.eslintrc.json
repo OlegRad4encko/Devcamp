@@ -7,9 +7,12 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
+
   "parserOptions": {
+    "ecmaVersion": 6,
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "experimentalObjectRestSpread": true
     },
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -18,5 +21,6 @@
     "react"
   ],
   "rules": {
+    "react/prop-types": "off"
   }
 }

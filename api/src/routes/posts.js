@@ -111,7 +111,12 @@ router.get('/:id/likes-list', async (req, res) => {
   const idPost = req.params.id;
   try {
     const count = await db
-      .select('profile.name', 'profile.surname', 'profile.user_icon')
+      .select(
+        'profile.id_profile',
+        'profile.name',
+        'profile.surname',
+        'profile.user_icon'
+      )
       .from('post')
       .join('post_likes', 'post.id_post', '=', 'post_likes.id_post')
       .join('profile', 'post.id_profile', '=', 'profile.id_profile')

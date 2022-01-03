@@ -1,6 +1,6 @@
 .App {
   background: #2C3A47;
-  height: fit-content;
+  height: 100vh;
 }
 
 .news-post {
@@ -102,34 +102,10 @@ header button:hover {
   justify-content: space-between;
 }
 
-.profile {
-  display: flex;
-  flex-direction: column;
-  width: 650px;
-  height: fit-content;
-  padding: 15px 20px;
-  background: #dcdde1;
-  margin-top: 30px;
-  box-shadow: 1px 1px 10px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  margin-bottom: 30px;
-}
-
-.profile-data {
+.scoro {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-self: center;
+  margin-top: 30px;
 }
-
-.profile-data img {
-  height: 231px;
-  margin-right: 20px;
-}
-
-.profile-values {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-
-

@@ -22,7 +22,6 @@ const post = {
 
 export function PostDate() {
     let params = useParams();
-    console.log(params.date);
     if(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/mg.exec(params.date)) {
         let date = {
             curDate: new Date(),

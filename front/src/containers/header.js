@@ -1,15 +1,13 @@
 import React from "react";
-//import { NewsTitle } from "../components/news/newsTitle";
-//import { NewsText } from "../components/news/newsText";
-// import { useState } from "react";
+import {Link} from "react-router-dom";
 
-export function Header({changeBody, viewArr}) {
-  //console.log(React.Children.map(children, (child) => child));
+export function Header() {
+
   return (
     <header>
-      <button onClick={() => changeBody(viewArr[0])}>Articles</button>
-      <button onClick={() => changeBody(viewArr[1])}>Add article</button>
-      <button onClick={() => changeBody(viewArr[2])}>Profile</button>
+      <Link className="button" to="/articles">Articles</Link>
+      <Link className="button" to="/add_article">Add article</Link>
+      <Link className="button" to="/profile">Profile</Link>
     </header>
   );
 }

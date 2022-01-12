@@ -1,8 +1,4 @@
 import React from "react";
-import { NewArticle } from "./addArticle/newArticle";
-//import { NewsTitle } from "../components/news/newsTitle";
-//import { NewsText } from "../components/news/newsText";
-// import { useState } from "react";
 
 import { PostImage } from "./news/postImage";
 import { NewsContainer } from "./news/newsContainer";
@@ -23,50 +19,27 @@ const post = {
     "            est laborum.",
 };
 
-export function PostBody({viewPage}) {
-  //console.log(React.Children.map(children, (child) => child));
-  console.log(viewPage);
-  if(viewPage == "posts") {
+export function PostBody() {
     return (
         <div id="body">
-          <div id="articles">
-            <div className="news-post">
-              <PostImage
-                  src={post.imageSrc}
-                  title={post.imageTitle}
-                  alt={post.imageAlt}
-              />
-              <NewsContainer title={post.postTitle} text={post.postText} />
+            <div id="articles">
+                <div className="news-post">
+                    <PostImage
+                        src={post.imageSrc}
+                        title={post.imageTitle}
+                        alt={post.imageAlt}
+                    />
+                    <NewsContainer title={post.postTitle} text={post.postText}/>
+                </div>
+                <div className="news-post">
+                    <PostImage
+                        src={"https://bit.ly/3rpUTxv"}
+                        title={post.imageTitle}
+                        alt={post.imageAlt}
+                    />
+                    <NewsContainer title={post.postTitle} text={post.postText}/>
+                </div>
             </div>
-            <div className="news-post">
-              <PostImage
-                  src={"https://bit.ly/3rpUTxv"}
-                  title={post.imageTitle}
-                  alt={post.imageAlt}
-              />
-              <NewsContainer title={post.postTitle} text={post.postText} />
-            </div>
-          </div>
         </div>
     );
-  } else {
-    if(viewPage == "addPost") {
-      return (
-          <div id="body">
-            <div className="scoro">
-              <NewArticle></NewArticle>
-            </div>
-          </div>
-      );
-    } else {
-      return (
-          <div id="body">
-            <div className="scoro">
-              <h3>скоро</h3>
-            </div>
-          </div>
-          )
-
-    }
-  }
 }

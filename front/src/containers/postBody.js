@@ -23,7 +23,7 @@ const post = {
     "            est laborum.",
 };
 
-export function Body({viewPage}) {
+export function PostBody({viewPage}) {
   //console.log(React.Children.map(children, (child) => child));
   console.log(viewPage);
   if(viewPage == "posts") {

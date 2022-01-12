@@ -4,8 +4,9 @@ export function NewArticle({
   title = "Любая тема",
   exampleText = "Сюдой пишите то, что хотите донести окружающим",
 }) {
-  //console.log(React.Children.map(children, (child) => child));
+
   return (
+      <div id="body">
     <form className="add-article">
       <h3>Создать новость</h3>
       <div className="add-article-form">
@@ -21,5 +22,6 @@ export function NewArticle({
         </div>
       </div>
     </form>
+      </div>
   );
 }

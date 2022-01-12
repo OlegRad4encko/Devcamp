@@ -22,7 +22,8 @@ const post = {
 
 export function Post() {
     let params = useParams();
-    console.log(/^[A-Za-zА-Яа-я0-9]+(\.doc | \.pdf | \.jpeg)$/mg.exec(params.id));
+    console.log(params.date)
+
     if(/^[0-9]*$/mg.exec(params.id)) {
         return (
             <div id="body">
@@ -71,11 +72,12 @@ export function Post() {
                     </div>
                 </div>
             );
-        } else {
+        }
+        else {
             return(
                 <div id="body">
                     <div id="articles">
-                        good
+                        404
                     </div>
                 </div>
             );

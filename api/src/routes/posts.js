@@ -115,7 +115,7 @@ router.get('/:id/likes-list', async (req, res) => {
         'profile.id_profile',
         'profile.name',
         'profile.surname',
-        'profile.user_icon'
+        'profile.user_icon',
       )
       .from('post')
       .join('post_likes', 'post.id_post', '=', 'post_likes.id_post')

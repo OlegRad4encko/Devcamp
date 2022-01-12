@@ -22,7 +22,6 @@ const post = {
 
 export function Post() {
     let params = useParams();
-    console.log(params.date)
 
     if(/^[0-9]*$/mg.exec(params.id)) {
         return (

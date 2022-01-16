@@ -1,4 +1,12 @@
 import React from "react";
-export function NewsText({ text }) {
+import PropTypes from "prop-types"
+
+const NewsText = ({ text }) => {
   return <p>{text}</p>;
 }
+
+NewsText.propTypes = {
+  text: PropTypes.string.isRequired
+}
+
+export default NewsText;

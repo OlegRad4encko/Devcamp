@@ -1,12 +1,12 @@
 import React from "react";
 
-import { PostImage } from "./news/postImage";
-import { NewsContainer } from "./news/newsContainer";
+import PostImage from "./news/postImage";
+import NewsContainer from "./news/newsContainer";
 
 const post = {
   imageSrc: "https://bit.ly/3ruwQgH",
   imageTitle: "Ubuntu",
-  imageAlt: undefined,
+  imageAlt: "undefined",
   postTitle: "My title",
   postText:
     "lorem ipsum dolor sit amet, consectetur adipisicing elkit,\n" +

@@ -1,8 +1,8 @@
 import React from "react";
 
-import { PostImage } from "./news/postImage";
-import { NewsContainer } from "./news/newsContainer";
-import {useParams} from "react-router-dom";
+import PostImage from "./news/postImage";
+import NewsContainer from "./news/newsContainer";
+import { useParams } from "react-router-dom";
 
 const post = {
     imageSrc: "https://bit.ly/3ruwQgH",
@@ -22,7 +22,6 @@ const post = {
 
 export function PostDate() {
     let params = useParams();
-    console.log(params.date);
     if(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/mg.exec(params.date)) {
         let date = {
             curDate: new Date(),

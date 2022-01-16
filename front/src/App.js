@@ -10,11 +10,13 @@ import {
     Routes,
     Route
 } from "react-router-dom";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
+
   return (
       <div className="App">
-
+        <ErrorBoundary>
           <BrowserRouter>
               <Header/>
             <Routes>
@@ -27,7 +29,7 @@ function App() {
                 <Route path="*" element={<div> 404 </div>} />
             </Routes>
           </BrowserRouter>
-
+        </ErrorBoundary>
       </div>
   );
 }

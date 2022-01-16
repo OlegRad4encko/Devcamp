@@ -1,11 +1,12 @@
-import { NewsTitle } from "../../components/news/newsTitle";
-import { NewsText } from "../../components/news/newsText";
+import NewsTitle from "../../components/news/newsTitle";
+import NewsText from "../../components/news/newsText";
 import React from "react";
+import PropTypes from "prop-types"
 
-export function NewsContainer({
+const NewsContainer = ({
   title = "Example title",
   text = "Empty Post",
-}) {
+}) => {
   //console.log(React.Children.map(children, (child) => child));
   return (
     <div>
@@ -14,3 +15,10 @@ export function NewsContainer({
     </div>
   );
 }
+
+NewsContainer.propTypes = {
+    title: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
+}
+
+export default NewsContainer;

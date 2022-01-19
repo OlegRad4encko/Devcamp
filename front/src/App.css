@@ -38,7 +38,7 @@ header {
   padding-top: 30px;
 }
 
-header button {
+header .button {
   margin: 0px 20px;
   padding: 0px 20px;
   background: none;
@@ -46,6 +46,8 @@ header button {
   color: #3ae374;
   font-weight: bold;
   transition: .3s;
+  text-decoration: none;
+  line-height: 35px;
 }
 
 header button:hover {

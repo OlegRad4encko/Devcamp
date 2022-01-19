@@ -1,22 +1,36 @@
-import React, {useState} from "react";
-
 import "./App.css";
 import { Header } from "./containers/header";
-import { Body } from "./containers/body";
+import { NewArticle } from "./containers/newArticle";
+import { PostBody } from "./containers/postBody";
+import { Post } from "./containers/post";
+import { PostDate } from "./containers/postDate";
+import { Profile } from "./containers/profile";
+import {
+    BrowserRouter,
+    Routes,
+    Route
+} from "react-router-dom";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
-    const viewArr = ['posts', 'addPost', 'profile'];
-    const [viewPage, changeView] = useState(viewArr[0]);
-
-    const changeBody = (block) => {
-        changeView(block);
-    }
 
   return (
-    <div className="App">
-      <Header changeBody={changeBody} viewArr={viewArr}></Header>
-      <Body viewPage={viewPage}></Body>
-    </div>
+      <div className="App">
+        <ErrorBoundary>
+          <BrowserRouter>
+              <Header/>
+            <Routes>
+                <Route path="/" element={<PostBody />} />
+                <Route path="/articles" element={<PostBody />} />
+                <Route path="/article/:id" element={<Post />} />
+                <Route path="/add_article" element={<NewArticle />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/date/:date" element={<PostDate />} />
+                <Route path="*" element={<div> 404 </div>} />
+            </Routes>
+          </BrowserRouter>
+        </ErrorBoundary>
+      </div>
   );
 }
 

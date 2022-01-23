@@ -1,50 +1,31 @@
 const router = require('express').Router();
 const db = require('../services/db');
+const commentsService = require('../services/store/comments.service');
+const likesService = require('../services/store/likes.service');
 
 router.get('/', async (req, res) => {
-  try {
-    const count = await db.select().from('post').orderBy('id_post');
+  const limit = req.query.limit || 10;
+  const page = req.query.page || 1;
+  let offset = 0;
 
-    if (Object.keys(count).length !== 0) {
-      res.status(200).json(count);
-    } else {
-      res.status(404).json({ message: 'Records not found' });
-    }
-  } catch (err) {
-    res.status(500).json({ message: 'Error selecting posts', error: err });
+  if (page > 1) {
+    offset = (page - 1) * limit;
   }
+
+  res.send(await db.select().from('post').limit(limit).offset(offset)
+    .orderBy('id_post'));
 });
 
 router.get('/:id', async (req, res) => {
   const idPost = req.params.id;
-  try {
-    const count = await db.select().from('post').where('id_post', idPost);
 
-    if (Object.keys(count).length !== 0) {
-      res.status(200).json(count);
-    } else {
-      res.status(404).json({ message: 'Records not found' });
-    }
-  } catch (err) {
-    res.status(500).json({ message: 'Error selecting post', error: err });
-  }
+  res.send(await db.select().from('post').where('id_post', idPost));
 });
 
 router.post('/', async (req, res) => {
   const add = req.body;
-  try {
-    const count = await db.insert(add).into('post');
-    if (count !== 0) {
-      res.status(200).json({ added: 'true' });
-    } else {
-      res.status(404).json({ added: 'false' });
-    }
-  } catch (err) {
-    res.status(500).json({ message: 'Error adding post', error: err });
-  }
-  res.send();
 
-  // EXAMPLE: http://localhost:3000/profiles?name=Anna&surname=Yashchenko&patronymic=Nikolaevna&phone=0998877654&email=example@gmail.com&user_icon=324234
+  res.send(await db.insert(add).into('post'));
 });
 
 router.put('/:id', async (req, res) => {
@@ -64,8 +45,67 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const idPost = req.params.id;
+
+  res.send(await db('post').where('id_post', idPost).del());
+});
+
+/**
+ *  @Post_comments_CRUD ----------------------------------------------------------------------
+ * */
+
+router.get('/:id/comments', async (req, res) => {
+  const idPost = req.params.id;
+
+  const limit = req.query.limit || 25;
+  const page = req.query.page || 1;
+  let offset = 0;
+
+  if (page > 1) {
+    offset = (page - 1) * limit;
+  }
+
+  res.send(await commentsService.getAllCommentsByPostID(limit, offset, idPost));
+});
+
+router.get('/:id/comments/:comment_id', async (req, res) => {
+  const idPost = req.params.id;
+  const idComment = req.params.comment_id;
+
+  res.send(await commentsService.getCommentByIdForPostById(idPost, idComment));
+});
+
+router.post('/:id/comments/', async (req, res) => {
+  const add = req.body;
+  add.id_post = req.params.id;
+
+  res.send(await commentsService.addCommentForPost(add));
+});
+
+router.put('/:id/comments/:comment_id', async (req, res) => {
+  const idPost = +req.params.id;
+  const idComment = +req.params.comment_id;
+
+  const changes = req.body;
+  changes.changed = true;
+
   try {
-    const count = await db('post').where('id_post', idPost).del();
+    const count = await commentsService.changeComment(idComment, idPost, changes);
+    if (count) {
+      res.status(200).json({ updated: true });
+    } else {
+      res.status(404).json({ updated: 'nfound' });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Error updating comment', error: err });
+  }
+});
+
+router.delete('/:id/comments/:comment_id', async (req, res) => {
+  const idPost = req.params.id;
+  const idComment = req.params.comment_id;
+  try {
+    const count = await commentsService.deleteComment(idComment, idPost);
     if (count !== 0) {
       res.status(200).json({ deleted: 'true' });
     } else {
@@ -76,60 +116,43 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-/*
+/**
+ *  @Post_likes_CRUD ----------------------------------------------------------------------
+ * */
 
-    Post comments list ------------------------------
-
- */
-
-router.get('/:id/comments', async (req, res) => {
+router.get('/:id/likes', async (req, res) => {
   const idPost = req.params.id;
-  console.log(idPost);
-  try {
-    const count = await db
-      .select()
-      .from('comments')
-      .orderBy('time_stamp')
-      .where('id_post', idPost);
-    if (Object.keys(count).length !== 0) {
-      res.status(200).json(count);
-    } else {
-      res.status(404).json({ message: 'Comments not found' });
-    }
-  } catch (err) {
-    res.status(500).json({ message: 'Error selecting comments', error: err });
+
+  const limit = req.query.limit || 10;
+  const page = req.query.page || 1;
+  let offset = 0;
+
+  if (page > 1) {
+    offset = (page - 1) * limit;
   }
+
+  res.send(await likesService.getAllLikesByPostID(limit, offset, idPost));
 });
 
-/*
+router.post('/:id/likes/', async (req, res) => {
+  const addPostData = req.body;
+  addPostData.id_post = req.params.id;
 
-    Post likes list ------------------------------
+  res.send(await likesService.addLikeToPostById(addPostData));
+});
 
- */
-
-router.get('/:id/likes-list', async (req, res) => {
+router.delete('/:id/likes/:like_id', async (req, res) => {
   const idPost = req.params.id;
+  const idLike = req.params.like_id;
   try {
-    const count = await db
-      .select(
-        'profile.id_profile',
-        'profile.name',
-        'profile.surname',
-        'profile.user_icon',
-      )
-      .from('post')
-      .join('post_likes', 'post.id_post', '=', 'post_likes.id_post')
-      .join('profile', 'post.id_profile', '=', 'profile.id_profile')
-      .where('post.id_post', idPost);
-    console.log(count);
-    if (Object.keys(count).length !== 0) {
-      res.status(200).json(count);
+    const count = await likesService.deleteLikeFromPostById(idLike, idPost);
+    if (count !== 0) {
+      res.status(200).json({ deleted: 'true' });
     } else {
-      res.status(404).json({ message: 'likes not found' });
+      res.status(404).json({ deleted: 'false' });
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: 'Error selecting likes', error: err });
+    res.status(500).json({ message: 'Error deleting like', error: err });
   }
 });
 

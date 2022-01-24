@@ -12,14 +12,42 @@ router.get('/', async (req, res) => {
     offset = (page - 1) * limit;
   }
 
-  res.send(await db.select().from('post').limit(limit).offset(offset)
+  res.send(await db.select(
+      'post.id_post',
+      'post.post_theme',
+      'post.post_text',
+      'post.time_stamp',
+      'post.post_avab',
+      'post.post_img',
+      'post.id_profile',
+      'profile.user_icon',
+      'profile.name',
+      'profile.surname',
+      'post.total_likes',
+      'post.total_comments')
+      .from('post').join('profile','profile.id_profile','=','post.id_profile')
+      .limit(limit).offset(offset)
     .orderBy('id_post'));
 });
 
 router.get('/:id', async (req, res) => {
   const idPost = req.params.id;
 
-  res.send(await db.select().from('post').where('id_post', idPost));
+  res.send(await db.select(
+      'post.id_post',
+      'post.post_text',
+      'post.post_theme',
+      'post.time_stamp',
+      'post.post_avab',
+      'post.post_img',
+      'post.id_profile',
+      'profile.user_icon',
+      'profile.user_name',
+      'profile.surname',
+      'post.total_likes',
+      'post.total_comments')
+      .from('post').join('profile','profile.id_profile','=','post.id_profile')
+      .where('id_post', idPost));
 });
 
 router.post('/', async (req, res) => {

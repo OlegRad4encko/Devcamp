@@ -1,3 +1,5 @@
+const cors = require('cors');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -8,6 +10,8 @@ const postsRoutes = require('./routes/posts');
 const port = config.appPort;
 
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());

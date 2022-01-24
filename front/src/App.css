@@ -1,11 +1,12 @@
 .App {
   background: #2C3A47;
-  height: 100vh;
+  min-height: 100vh;
+  height-max: auto;
 }
 
-.news-post {
+.news-post, .profiles {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 650px;
   height: fit-content;
   padding: 15px 20px;
@@ -15,7 +16,34 @@
   border-radius: 5px;
 }
 
-.news-post:first-child {
+.post-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 15px;
+}
+
+.post-info .post-author {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-info .post-author img {
+  height: 50px;
+  border-radius: 100%;
+  border: 1px solid #2C3A47;
+}
+
+.post-author .user-link {
+  color: black;
+  text-decoration: none;
+}
+
+.news-post:first-child, .profiles:first-child {
   margin-top: 0px;
 }
 
@@ -24,8 +52,28 @@
   margin-right: 20px;
 }
 
-.news-post h3 {
-  margin-top: 5px;
+.post_content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post_content {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+}
+
+.post_content h3 {
+  margin-top: 17px;
+}
+
+.post_content p {
+  text-align: justify;
+}
+
+.post-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 header {
@@ -37,6 +85,33 @@ header {
   justify-content: center;
   padding-top: 30px;
 }
+
+.profile-main-data {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-main-data img {
+  height: 198px;
+  margin-right: 20px;
+}
+
+.profile-main-data table {
+  border-collapse: collapse;
+  width: auto;
+}
+
+
+.profile-main-data table tr td {
+  padding: 7px 20px;
+
+}
+
+font.hidden {
+  color: grey;
+}
+
 
 header .button {
   margin: 0px 20px;
@@ -64,6 +139,42 @@ header button:hover {
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
+}
+
+.in-line-users {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.profiles-mini {
+  background: #dcdde1;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  margin: 0px 10px;
+}
+
+.profiles-mini img {
+  height: 100px;
+  margin-right: 20px;
+  border-radius: 100%;
+  border: 1px solid gray;
+  box-sizing: border-box;
+}
+
+.profiles-mini a {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: black;
+}
+
+.profile-main-data-coll {
+  display: flex;
+  flex-direction: column;
 }
 
 .add-article {

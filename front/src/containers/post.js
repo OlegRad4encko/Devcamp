@@ -4,10 +4,12 @@ import PostImage from "./news/postImage";
 import NewsContainer from "./news/newsContainer";
 import { useParams } from "react-router-dom";
 
+import { getPosts } from './posts/api/crud';
+
 const post = {
     imageSrc: "https://bit.ly/3ruwQgH",
     imageTitle: "Ubuntu",
-    imageAlt: undefined,
+    imageAlt: "undefined",
     postTitle: "My title",
     postText:
         "lorem ipsum dolor sit amet, consectetur adipisicing elkit,\n" +
@@ -20,8 +22,11 @@ const post = {
         "            est laborum.",
 };
 
-export function Post() {
+const PostContainer = () => {
     let params = useParams();
+
+    const result = getPosts(params.id);
+    console.log(result);
 
     if(/^[0-9]*$/mg.exec(params.id)) {
         return (
@@ -82,3 +87,5 @@ export function Post() {
             );
         }
 }
+
+export default PostContainer;

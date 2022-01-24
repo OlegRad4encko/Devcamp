@@ -1,22 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types"
 
-const PostImage = ({
-  src = "https://bit.ly/3rpUTxv",
-  title = "Title example",
-  alt = "unique solution to your problem",
-}) => {
-  return (
-    <div>
-      <img src={src} title={title} alt={alt} />
-    </div>
-  );
+const PostImage = ({src , title, alt}) => {
+  if(src == null) {
+    return " ";
+
+  } else {
+    return (
+        <div>
+          <img src={src} title={title} alt={alt} />
+        </div>
+    );
+  }
+
+
 }
 
 PostImage.propTypes = {
-  src: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired
+  src: PropTypes.string,
+  title: PropTypes.string,
+  alt: PropTypes.string
 }
 
+PostImage.defaultProps = {
+  src: '',
+  title: '',
+  alt: ''
+}
 export default PostImage;

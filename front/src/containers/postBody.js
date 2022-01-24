@@ -1,45 +1,56 @@
 import React from "react";
+import Moment from "moment";
 
-import PostImage from "./news/postImage";
 import NewsContainer from "./news/newsContainer";
 
-const post = {
-  imageSrc: "https://bit.ly/3ruwQgH",
-  imageTitle: "Ubuntu",
-  imageAlt: "undefined",
-  postTitle: "My title",
-  postText:
-    "lorem ipsum dolor sit amet, consectetur adipisicing elkit,\n" +
-    "            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" +
-    "            ut enim ad minim veniam, quis nostrud exercitation ullamco\n" +
-    "            laboris nisi ut aliquip ex ea commodo consequat. duis aute\n" +
-    "            figures dolor in reprehend in voluptate velit esse cillum\n" +
-    "            dolore eu fugiat nulla pariatur. excepteur sint occaecat cupidatat\n" +
-    "            non proident, sunt in culpa qui officia deserunt mollit anim id\n" +
-    "            est laborum.",
-};
+import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getPosts } from './posts/api/crud';
 
-export function PostBody() {
+
+import userIcon from './img/default_profile_image.png';
+
+const PostsContainer = () => {
+    const { isFetching, data } = useQuery('allPosts', () => getPosts());
+    const posts = data?.data || [];
     return (
         <div id="body">
             <div id="articles">
-                <div className="news-post">
-                    <PostImage
-                        src={post.imageSrc}
-                        title={post.imageTitle}
-                        alt={post.imageAlt}
-                    />
-                    <NewsContainer title={post.postTitle} text={post.postText}/>
-                </div>
-                <div className="news-post">
-                    <PostImage
-                        src={"https://bit.ly/3rpUTxv"}
-                        title={post.imageTitle}
-                        alt={post.imageAlt}
-                    />
-                    <NewsContainer title={post.postTitle} text={post.postText}/>
-                </div>
+                {isFetching && <div>Loading...</div>}
+                {posts?.map((
+                    {id_post, post_theme,
+                        post_text, time_stamp,
+                        post_avab, post_img,
+                        id_profile, user_icon, name,
+                        surname, total_likes,
+                        total_comments}) => (
+                    <div className="news-post" id={id_post} key={"idpost"+id_post}>
+                        <div className="post-info" availability={post_avab} >
+                            <div className="post-author">
+                                <img src={user_icon || userIcon} />
+                                <Link className="user-link" to={"/user/"+id_profile}>{surname} {name}</Link>
+                            </div>
+                            <div className="post-date">
+                                {Moment(time_stamp).format("DD.MM.YYYY HH:MM")}
+                            </div>
+                        </div>
+                        <div className="post_content">
+                            <NewsContainer title={post_theme}
+                                           text={post_text}
+                                           src={post_img}
+                                           title_img={"post image"}
+                                           alt={"post image"}/>
+                        </div>
+                        <div className="post-stats">
+                            <div>Лайки: {total_likes}</div>
+                            <div>Комментарии: {total_comments}</div>
+                        </div>
+                    </div>
+
+                ))}
             </div>
         </div>
     );
 }
+
+export default PostsContainer;
